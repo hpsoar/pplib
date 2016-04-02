@@ -70,5 +70,11 @@ def schedule(task, wait_time=10):
         time.sleep(wait_time)
         return False
 
+data_root = 'data'
+
+def data_path(sub_path, filename):
+    import os
+    path = os.path.join(data_root, sub_path)
+    return os.path.join(path, filename)
 
 
