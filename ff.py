@@ -26,12 +26,6 @@ def save(filename, content):
     f.close()
 
 
-def save_json_object(filename, obj):
-    import simplejson
-    content = simplejson.dumps(obj)
-    save(filename, content)
-
-
 def read(filename):
     import os
     if os.path.exists(filename):
@@ -40,6 +34,17 @@ def read(filename):
         f.close()
         return content
     return None
+
+
+def save_json(filename, obj):
+    import simplejson
+    content = simplejson.dumps(obj)
+    save(filename, content)
+
+
+def read_json(path):
+    import simplejson
+    return simplejson.load(open(path))
 
 
 def read_int(filename, default=0):
@@ -53,11 +58,6 @@ def save_int(filename, value):
 
 def files_in_path(path):
     return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
-
-
-def json_from_file(path):
-    import simplejson
-    return simplejson.load(open(path))
 
 
 def schedule(task, wait_time=10):
