@@ -52,6 +52,16 @@ def read_int(filename, default=0):
     return int(d) if d else default
 
 
+def read_states(filename, default=None):
+    d = read(filename)
+    return d.split(',') if d else default
+
+
+def save_states(filename, states):
+    state_str = ','.join(states)
+    save(filename, state_str)
+
+
 def save_int(filename, value):
     save(filename, '%d' % value)
 
