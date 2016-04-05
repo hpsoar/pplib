@@ -88,3 +88,7 @@ def data_path(sub_path, filename):
     return os.path.join(path, filename)
 
 
+def format_object(o):
+    import json
+    return json.dumps(o, indent=4)
+
