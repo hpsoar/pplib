@@ -4,6 +4,14 @@ import os
 import errno
 
 
+def openfile(path, mode):
+    dir_name = os.path.dirname(path)
+    if dir_name:
+        ensure_path(dir_name)
+
+    return open(path, mode)
+
+
 def ensure_path(path):
     try:
         os.makedirs(path)
@@ -44,7 +52,15 @@ def save_json(filename, obj):
 
 def read_json(path):
     import simplejson
-    return simplejson.load(open(path))
+    if os.path.exists(path):
+        return simplejson.load(open(path))
+    else:
+        return None
+
+
+def read_lines(path):
+    c = read(path)
+    return c.split('\n') if c else list()
 
 
 def read_int(filename, default=0):

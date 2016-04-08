@@ -7,6 +7,7 @@ def schedule(task):
 
 def try_task(task):
     try:
+        print 'start task'
         task()
         return True
     except Exception, ex: 
