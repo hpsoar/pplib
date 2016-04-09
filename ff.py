@@ -4,6 +4,11 @@ import os
 import errno
 
 
+def url_to_filename(url):
+    import base64
+    return base64.urlsafe_b64encode(url)
+
+
 def openfile(path, mode):
     dir_name = os.path.dirname(path)
     if dir_name:
@@ -22,14 +27,19 @@ def ensure_path(path):
             raise
 
 
-def save(filename, content):
+def filenames_inpath(path):
+    from os import listdir
+    from os.path import isfile, join
+    return [join(path, f) for f in listdir(path) if isfile(join(path, f))]
+
+
+def save(filename, content, mode='w'):
     import os
     path = os.path.dirname(filename)
     if path:
         ensure_path(path)
 
-    import io
-    f = open(filename, 'w')
+    f = open(filename, mode)
     f.write(content)
     f.close()
 
@@ -107,4 +117,21 @@ def data_path(sub_path, filename):
 def format_object(o):
     import json
     return json.dumps(o, indent=4)
+
+
+def enum_lines(f, callback, strip=True):
+    for l in open(f):
+        if strip:
+            l = l.strip()
+        callback(l)
+
+
+def enum_lines2(f, callback, strip=True, sep='\t'):
+    def _callback(l):
+        parts = l.split(sep)
+        if strip:
+            parts = [p.strip() for p in parts]
+        callback(l, parts)
+
+    enum_lines(f, _callback, False)
 
