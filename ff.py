@@ -2,7 +2,13 @@
 
 import os
 import errno
+from bs4 import BeautifulSoup as Soup
 
+def BSFile(filename):
+    return Soup(open(filename))
+
+def BS(conent):
+    return Soup(content)
 
 def url_to_filename(url):
     import base64
@@ -26,6 +32,8 @@ def ensure_path(path):
         else:
             raise
 
+def exists(path):
+    return os.path.exists(path)
 
 def filenames_inpath(path):
     from os import listdir
