@@ -11,23 +11,24 @@ class BaseM(object):
         return ff.format_object(self.dump_object())
 
     def dump_object(self):
-        props = self.properties_to_dump()
         o = dict()
-        for k in props:
-            o[k] = BaseM.transform_prop(k, self.dict__property(k))
+        for k in self.properties_to_dump():
+            o[k] = self.transform_prop(k, self.dict__property(k))
         return copy.deepcopy(o)
 
     def dict__property(self, k):
-        return self.__dict__[k]
+        d = self.property_map()
+        if d and k in d:
+            return d[k]
+        return None
 
     def property_map(self):
         return self.__dict__
 
     def properties_to_dump(self):
-        return self.__dict__.keys()
+        return self.property_map().keys()
 
-    @staticmethod
-    def transform_prop(key, value):
+    def transform_prop(self, key, value):
         return value
 
 
