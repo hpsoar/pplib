@@ -124,7 +124,7 @@ def data_path(sub_path, filename):
 
 def format_object(o):
     import json
-    return json.dumps(o, indent=4)
+    return json.dumps(o, ensure_ascii=False, indent=4)
 
 
 def enum_lines(f, callback, strip=True):
